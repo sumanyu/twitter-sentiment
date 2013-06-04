@@ -1,0 +1,10 @@
+MVP 0.0
+
+Goal
+
+* Show real-time emotion of the world
+
+Features
+
+* Simple 2-d graph that updates every two seconds
+* Horizontal (time) axis divides the vertical axis into two emotions: positive & negative
