@@ -8,3 +8,7 @@ Features
 
 * Simple 2-d graph that updates every two seconds
 * Horizontal (time) axis divides the vertical axis into two emotions: positive & negative
+
+Sample JSON data
+
+[score_0, score_1, score_2 ... score_n]
