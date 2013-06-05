@@ -6,58 +6,58 @@
     function TwitterSentimentGraph(element) {
       this.element = element;
       this._setup();
-      ({
-        _setup: function() {
-          this.width = 600;
-          this.height = 300;
-          return this.data = [];
-        }
-      });
     }
 
-    TwitterSentimentGraph.prototype._populateFakeData = function() {
-      var i, tmp, _i;
+    TwitterSentimentGraph.prototype._setup = function() {
+      this.width = 600;
+      this.height = 300;
+      return this.data = [];
+    };
 
+    TwitterSentimentGraph.prototype._populateFakeData = function() {
+      var i, tmp, _i, _results;
+
+      _results = [];
       for (i = _i = 0; _i <= 30; i = ++_i) {
         tmp = {
-          time: (new Date).getTime(),
-          data: Math.floor(Math.random() * 6) - 3
+          x: (new Date).getTime(),
+          y: Math.floor(Math.random() * 6) - 3
         };
-        this.data.push(tmp);
+        _results.push(this.data.push(tmp));
       }
-      return {
-        _setData: function() {
-          return _populateFakeData();
-        },
-        drawGraph: function() {
-          var construction, graph;
+      return _results;
+    };
 
-          this._setData();
-          construction = {
-            element: this.element,
-            height: this.height,
-            width: this.width,
-            series: [
-              {
-                color: 'steelblue',
-                data: this.data
-              }
-            ]
-          };
-          graph = new Rickshaw.Graph(construction);
-          return graph.render();
-        }
+    TwitterSentimentGraph.prototype._setData = function() {
+      return this._populateFakeData();
+    };
+
+    TwitterSentimentGraph.prototype.drawGraph = function() {
+      var construction, graph;
+
+      this._setData();
+      construction = {
+        element: this.element,
+        height: this.height,
+        width: this.width,
+        series: [
+          {
+            color: 'steelblue',
+            data: this.data
+          }
+        ]
       };
+      graph = new Rickshaw.Graph(construction);
+      return graph.render();
     };
 
     return TwitterSentimentGraph;
 
   })();
 
-  (function() {
+  $(document).ready(function() {
     var twitter_sentiment_graph;
 
-    console.log("Hey okay");
     twitter_sentiment_graph = new TwitterSentimentGraph(document.querySelector("#graph"));
     return twitter_sentiment_graph.drawGraph();
   });

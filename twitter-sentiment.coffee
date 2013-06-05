@@ -1,14 +1,14 @@
 # ---
-# Twitter sentiment graph using Rickshaw
+# Uses Rickshaw, jQuery
 # ---
 
 class TwitterSentimentGraph
 
-	constructor: (@element) ->
-		@_setup()
+  constructor: (@element) ->
+    @_setup()
 
   _setup: ->
-		# size of the drawing area inside the svg's to make
+    # size of the drawing area inside the svg's to make
     # the bar charts
     @width = 600
     @height = 300
@@ -32,37 +32,37 @@ class TwitterSentimentGraph
 
     @data = []
 
-	_populateFakeData: ->
-		for i in [0..30]
-			tmp = 
-				time: (new Date).getTime()
-				data: Math.floor(Math.random() * 6) - 3
+  _populateFakeData: ->
+    for i in [0..30]
+      tmp = 
+        x: (new Date).getTime()
+        y: Math.floor(Math.random() * 6) - 3
 
-			@data.push(tmp)
+      @data.push(tmp)
 
   _setData: ->
-   	_populateFakeData()
+    @_populateFakeData()
 
   drawGraph: ->
-   	@_setData()
+    @_setData()
 
-   	construction = 
-   		element: @element
-   		height: @height
-   		width: @width
-   		series:[
-   			color: 'steelblue'
-   			data: @data
-   		]
+    construction = 
+      element: @element
+      height: @height
+      width: @width
+      series:[
+        color: 'steelblue'
+        data: @data
+      ]
 
-   	graph = new Rickshaw.Graph(construction)
+    graph = new Rickshaw.Graph(construction)
 
-   	graph.render()
+    graph.render()
 
   # _updateGraph: ->
 
   # _setAxis: ->
-  # 	xAxis = d3.svg.axis()
+  #   xAxis = d3.svg.axis()
   #   .scale(@xScale)
   #   .orient("bottom");
 
@@ -70,8 +70,6 @@ class TwitterSentimentGraph
   #   .scale(@yScale)
   #   .orient("left");
 
-->
-	alert("OKay!")
-	console.log "Hey okay"
-	twitter_sentiment_graph = new TwitterSentimentGraph(document.querySelector("#graph"))
-	twitter_sentiment_graph.drawGraph()
+$(document).ready ->
+  twitter_sentiment_graph = new TwitterSentimentGraph(document.querySelector("#graph"))
+  twitter_sentiment_graph.drawGraph()
