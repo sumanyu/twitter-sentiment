@@ -41,10 +41,10 @@ class TwitterSentimentGraph
       @data.push(tmp)
 
   _rickShawData: ->
-    random = new Rickshaw.Fixtures.RandomData(100)
+    @random = new Rickshaw.Fixtures.RandomData(100)
 
     for i in [0..100]
-      random.addData([@data])
+      @random.addData([@data])
 
   _sampleData: ->
     for i in [0..30]
@@ -97,6 +97,14 @@ class TwitterSentimentGraph
   _setHoverDetail: ->
     @hoverDetail = new Rickshaw.Graph.HoverDetail(graph: @graph)
 
+  _scheduleUpdateData: ->
+
+    fetch_data = =>
+      @random.addData([@data])
+      @graph.update()
+
+    setInterval(fetch_data, 1000)
+
   drawGraph: ->
     @_setData()
 
@@ -122,6 +130,8 @@ class TwitterSentimentGraph
     @_setSlider()
 
     @_setHoverDetail()
+
+    @_scheduleUpdateData()
 
     @graph.render()
 

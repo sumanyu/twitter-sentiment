@@ -29,12 +29,12 @@
     };
 
     TwitterSentimentGraph.prototype._rickShawData = function() {
-      var i, random, _i, _results;
+      var i, _i, _results;
 
-      random = new Rickshaw.Fixtures.RandomData(100);
+      this.random = new Rickshaw.Fixtures.RandomData(100);
       _results = [];
       for (i = _i = 0; _i <= 100; i = ++_i) {
-        _results.push(random.addData([this.data]));
+        _results.push(this.random.addData([this.data]));
       }
       return _results;
     };
@@ -101,6 +101,17 @@
       });
     };
 
+    TwitterSentimentGraph.prototype._scheduleUpdateData = function() {
+      var fetch_data,
+        _this = this;
+
+      fetch_data = function() {
+        _this.random.addData([_this.data]);
+        return _this.graph.update();
+      };
+      return setInterval(fetch_data, 1000);
+    };
+
     TwitterSentimentGraph.prototype.drawGraph = function() {
       var construction;
 
@@ -124,6 +135,7 @@
       this._setAxis();
       this._setSlider();
       this._setHoverDetail();
+      this._scheduleUpdateData();
       return this.graph.render();
     };
 
