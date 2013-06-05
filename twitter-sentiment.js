@@ -9,8 +9,8 @@
     }
 
     TwitterSentimentGraph.prototype._setup = function() {
-      this.width = 600;
-      this.height = 300;
+      this.width = 800;
+      this.height = 400;
       return this.data = [];
     };
 
@@ -20,7 +20,21 @@
       _results = [];
       for (i = _i = 0; _i <= 30; i = ++_i) {
         tmp = {
-          x: (new Date).getTime(),
+          x: (new Date).getTime() + i * 100,
+          y: Math.floor(Math.random() * 6) - 3
+        };
+        _results.push(this.data.push(tmp));
+      }
+      return _results;
+    };
+
+    TwitterSentimentGraph.prototype._sampleData = function() {
+      var i, tmp, _i, _results;
+
+      _results = [];
+      for (i = _i = 0; _i <= 30; i = ++_i) {
+        tmp = {
+          x: i,
           y: Math.floor(Math.random() * 6) - 3
         };
         _results.push(this.data.push(tmp));
@@ -32,14 +46,30 @@
       return this._populateFakeData();
     };
 
+    TwitterSentimentGraph.prototype._setAxis = function() {
+      var config;
+
+      this.xAxis = new Rickshaw.Graph.Axis.Time({
+        graph: this.graph
+      });
+      config = {
+        graph: this.graph,
+        orientation: 'left',
+        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+        element: $('#y_axis')[0]
+      };
+      return this.yAxis = new Rickshaw.Graph.Axis.Y(config);
+    };
+
     TwitterSentimentGraph.prototype.drawGraph = function() {
-      var construction, graph;
+      var construction;
 
       this._setData();
       construction = {
         element: this.element,
         height: this.height,
         width: this.width,
+        min: 'auto',
         series: [
           {
             color: 'steelblue',
@@ -47,8 +77,9 @@
           }
         ]
       };
-      graph = new Rickshaw.Graph(construction);
-      return graph.render();
+      this.graph = new Rickshaw.Graph(construction);
+      this._setAxis();
+      return this.graph.render();
     };
 
     return TwitterSentimentGraph;
@@ -58,7 +89,7 @@
   $(document).ready(function() {
     var twitter_sentiment_graph;
 
-    twitter_sentiment_graph = new TwitterSentimentGraph(document.querySelector("#graph"));
+    twitter_sentiment_graph = new TwitterSentimentGraph($("#graph")[0]);
     return twitter_sentiment_graph.drawGraph();
   });
 

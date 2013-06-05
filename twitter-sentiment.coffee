@@ -10,8 +10,8 @@ class TwitterSentimentGraph
   _setup: ->
     # size of the drawing area inside the svg's to make
     # the bar charts
-    @width = 600
-    @height = 300
+    @width = 800
+    @height = 400
 
     # @margin = 
     #   top: 20
@@ -35,13 +35,35 @@ class TwitterSentimentGraph
   _populateFakeData: ->
     for i in [0..30]
       tmp = 
-        x: (new Date).getTime()
+        x: (new Date).getTime() + i*100
         y: Math.floor(Math.random() * 6) - 3
 
       @data.push(tmp)
 
+  _sampleData: ->
+    for i in [0..30]
+      tmp = 
+        x: i
+        y: Math.floor(Math.random() * 6) - 3
+
+      @data.push(tmp) 
+
   _setData: ->
     @_populateFakeData()
+    # @_sampleData()
+
+  _setAxis: ->
+    @xAxis = new Rickshaw.Graph.Axis.Time( graph: @graph )
+
+    # console.log Rickshaw.Fixtures.Number.formatKMBT
+
+    config = 
+      graph: @graph
+      orientation: 'left'
+      tickFormat: Rickshaw.Fixtures.Number.formatKMBT
+      element: $('#y_axis')[0]
+
+    @yAxis = new Rickshaw.Graph.Axis.Y(config)
 
   drawGraph: ->
     @_setData()
@@ -50,14 +72,17 @@ class TwitterSentimentGraph
       element: @element
       height: @height
       width: @width
+      min: 'auto'
       series:[
         color: 'steelblue'
         data: @data
       ]
 
-    graph = new Rickshaw.Graph(construction)
+    @graph = new Rickshaw.Graph(construction)
 
-    graph.render()
+    @_setAxis()
+
+    @graph.render()
 
   # _updateGraph: ->
 
@@ -71,5 +96,6 @@ class TwitterSentimentGraph
   #   .orient("left");
 
 $(document).ready ->
-  twitter_sentiment_graph = new TwitterSentimentGraph(document.querySelector("#graph"))
+
+  twitter_sentiment_graph = new TwitterSentimentGraph($("#graph")[0])
   twitter_sentiment_graph.drawGraph()
