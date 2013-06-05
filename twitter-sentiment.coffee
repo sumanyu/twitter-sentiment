@@ -79,6 +79,9 @@ class TwitterSentimentGraph
 
     @slider = new Rickshaw.Graph.RangeSlider(config)
 
+  _setHoverDetail: ->
+    @hoverDetail = new Rickshaw.Graph.HoverDetail(graph: @graph)
+
   drawGraph: ->
     @_setData()
 
@@ -102,6 +105,8 @@ class TwitterSentimentGraph
     # @_setLegend()
 
     @_setSlider()
+
+    @_setHoverDetail()
 
     @graph.render()
 

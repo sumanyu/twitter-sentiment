@@ -81,6 +81,12 @@
       return this.slider = new Rickshaw.Graph.RangeSlider(config);
     };
 
+    TwitterSentimentGraph.prototype._setHoverDetail = function() {
+      return this.hoverDetail = new Rickshaw.Graph.HoverDetail({
+        graph: this.graph
+      });
+    };
+
     TwitterSentimentGraph.prototype.drawGraph = function() {
       var construction;
 
@@ -103,6 +109,7 @@
       this.graph = new Rickshaw.Graph(construction);
       this._setAxis();
       this._setSlider();
+      this._setHoverDetail();
       return this.graph.render();
     };
 
