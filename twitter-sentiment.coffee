@@ -12,24 +12,6 @@ class TwitterSentimentGraph
     # the bar charts
     @width = 800
     @height = 400
-
-    # @margin = 
-    #   top: 20
-    #   bottom: 20
-    #   left: 40
-    #   right: 60
-
-    # @graphWidth = @width - @margin.left - @margin.right
-    # @graphHeight = @height - @margin.top - @margin.bottom
-
-    # # time scale
-    # @xScale = d3.time.scale()
-    #   .range([0, @graphWidth])
-
-    # # emotion scale
-    # @yScale = d3.scale.linear()
-    #   .range([0, @graphHeight])
-
     @data = []
 
   _populateFakeData: ->
@@ -134,17 +116,6 @@ class TwitterSentimentGraph
     @_scheduleUpdateData()
 
     @graph.render()
-
-  # _updateGraph: ->
-
-  # _setAxis: ->
-  #   xAxis = d3.svg.axis()
-  #   .scale(@xScale)
-  #   .orient("bottom");
-
-  #   yAxis = d3.svg.axis()
-  #   .scale(@yScale)
-  #   .orient("left");
 
 $(document).ready ->
   twitter_sentiment_graph = new TwitterSentimentGraph($("#graph")[0])
