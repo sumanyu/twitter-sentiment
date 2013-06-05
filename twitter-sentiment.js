@@ -20,8 +20,8 @@
       _results = [];
       for (i = _i = 0; _i <= 30; i = ++_i) {
         tmp = {
-          x: (new Date).getTime() + i * 100,
-          y: Math.floor(Math.random() * 6) - 3
+          x: (new Date).getTime() + i * 50,
+          y: Math.floor(Math.random() * 7) - 3
         };
         _results.push(this.data.push(tmp));
       }
@@ -61,6 +61,16 @@
       return this.yAxis = new Rickshaw.Graph.Axis.Y(config);
     };
 
+    TwitterSentimentGraph.prototype._setLegend = function() {
+      var config;
+
+      config = {
+        element: $("#legend")[0],
+        graph: this.graph
+      };
+      return this.legend = Rickshaw.Graph.Legend(config);
+    };
+
     TwitterSentimentGraph.prototype.drawGraph = function() {
       var construction;
 
@@ -73,12 +83,14 @@
         series: [
           {
             color: 'steelblue',
+            name: 'Mood',
             data: this.data
           }
         ]
       };
       this.graph = new Rickshaw.Graph(construction);
       this._setAxis();
+      this._setLegend();
       return this.graph.render();
     };
 

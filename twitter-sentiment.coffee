@@ -35,8 +35,8 @@ class TwitterSentimentGraph
   _populateFakeData: ->
     for i in [0..30]
       tmp = 
-        x: (new Date).getTime() + i*100
-        y: Math.floor(Math.random() * 6) - 3
+        x: (new Date).getTime() + i*50
+        y: Math.floor(Math.random() * 7) - 3
 
       @data.push(tmp)
 
@@ -55,8 +55,6 @@ class TwitterSentimentGraph
   _setAxis: ->
     @xAxis = new Rickshaw.Graph.Axis.Time( graph: @graph )
 
-    # console.log Rickshaw.Fixtures.Number.formatKMBT
-
     config = 
       graph: @graph
       orientation: 'left'
@@ -64,6 +62,14 @@ class TwitterSentimentGraph
       element: $('#y_axis')[0]
 
     @yAxis = new Rickshaw.Graph.Axis.Y(config)
+
+  _setLegend: ->
+
+    config =
+      element: $("#legend")[0]
+      graph: @graph
+
+    @legend = Rickshaw.Graph.Legend(config)
 
   drawGraph: ->
     @_setData()
@@ -75,12 +81,15 @@ class TwitterSentimentGraph
       min: 'auto'
       series:[
         color: 'steelblue'
+        name: 'Mood'
         data: @data
       ]
 
     @graph = new Rickshaw.Graph(construction)
 
     @_setAxis()
+
+    @_setLegend()
 
     @graph.render()
 
