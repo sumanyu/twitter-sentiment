@@ -40,6 +40,12 @@ class TwitterSentimentGraph
 
       @data.push(tmp)
 
+  _rickShawData: ->
+    random = new Rickshaw.Fixtures.RandomData(100)
+
+    for i in [0..100]
+      random.addData([@data])
+
   _sampleData: ->
     for i in [0..30]
       tmp = 
@@ -49,17 +55,26 @@ class TwitterSentimentGraph
       @data.push(tmp) 
 
   _setData: ->
-    @_populateFakeData()
+    # @_populateFakeData()
     # @_sampleData()
+    @_rickShawData()
+
 
   _setAxis: ->
-    @xAxis = new Rickshaw.Graph.Axis.Time( graph: @graph )
+
+    ticksTreatment = 'glow'
+
+    @xAxis = new Rickshaw.Graph.Axis.Time( 
+      graph: @graph 
+      ticksTreatment: ticksTreatment
+      ) 
 
     config = 
       graph: @graph
       orientation: 'left'
       tickFormat: Rickshaw.Fixtures.Number.formatKMBT
       element: $('#y_axis')[0]
+      ticksTreatment: ticksTreatment
 
     @yAxis = new Rickshaw.Graph.Axis.Y(config)
 

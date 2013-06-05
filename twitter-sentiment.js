@@ -28,6 +28,17 @@
       return _results;
     };
 
+    TwitterSentimentGraph.prototype._rickShawData = function() {
+      var i, random, _i, _results;
+
+      random = new Rickshaw.Fixtures.RandomData(100);
+      _results = [];
+      for (i = _i = 0; _i <= 100; i = ++_i) {
+        _results.push(random.addData([this.data]));
+      }
+      return _results;
+    };
+
     TwitterSentimentGraph.prototype._sampleData = function() {
       var i, tmp, _i, _results;
 
@@ -43,20 +54,23 @@
     };
 
     TwitterSentimentGraph.prototype._setData = function() {
-      return this._populateFakeData();
+      return this._rickShawData();
     };
 
     TwitterSentimentGraph.prototype._setAxis = function() {
-      var config;
+      var config, ticksTreatment;
 
+      ticksTreatment = 'glow';
       this.xAxis = new Rickshaw.Graph.Axis.Time({
-        graph: this.graph
+        graph: this.graph,
+        ticksTreatment: ticksTreatment
       });
       config = {
         graph: this.graph,
         orientation: 'left',
         tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-        element: $('#y_axis')[0]
+        element: $('#y_axis')[0],
+        ticksTreatment: ticksTreatment
       };
       return this.yAxis = new Rickshaw.Graph.Axis.Y(config);
     };
