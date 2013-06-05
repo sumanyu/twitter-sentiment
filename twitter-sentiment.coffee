@@ -71,6 +71,14 @@ class TwitterSentimentGraph
 
     @legend = Rickshaw.Graph.Legend(config)
 
+  _setSlider: ->
+
+    config =
+      graph: @graph
+      element: $("#slider")
+
+    @slider = new Rickshaw.Graph.RangeSlider(config)
+
   drawGraph: ->
     @_setData()
 
@@ -79,9 +87,11 @@ class TwitterSentimentGraph
       height: @height
       width: @width
       min: 'auto'
+      stroke: true
+      preserve: true
       series:[
         color: 'steelblue'
-        name: 'Mood'
+        name: 'Global'
         data: @data
       ]
 
@@ -89,7 +99,9 @@ class TwitterSentimentGraph
 
     @_setAxis()
 
-    @_setLegend()
+    # @_setLegend()
+
+    @_setSlider()
 
     @graph.render()
 
@@ -105,6 +117,5 @@ class TwitterSentimentGraph
   #   .orient("left");
 
 $(document).ready ->
-
   twitter_sentiment_graph = new TwitterSentimentGraph($("#graph")[0])
   twitter_sentiment_graph.drawGraph()

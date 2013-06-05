@@ -71,6 +71,16 @@
       return this.legend = Rickshaw.Graph.Legend(config);
     };
 
+    TwitterSentimentGraph.prototype._setSlider = function() {
+      var config;
+
+      config = {
+        graph: this.graph,
+        element: $("#slider")
+      };
+      return this.slider = new Rickshaw.Graph.RangeSlider(config);
+    };
+
     TwitterSentimentGraph.prototype.drawGraph = function() {
       var construction;
 
@@ -80,17 +90,19 @@
         height: this.height,
         width: this.width,
         min: 'auto',
+        stroke: true,
+        preserve: true,
         series: [
           {
             color: 'steelblue',
-            name: 'Mood',
+            name: 'Global',
             data: this.data
           }
         ]
       };
       this.graph = new Rickshaw.Graph(construction);
       this._setAxis();
-      this._setLegend();
+      this._setSlider();
       return this.graph.render();
     };
 
